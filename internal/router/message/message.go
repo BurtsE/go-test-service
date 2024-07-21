@@ -1,18 +1,20 @@
 package router
 
 import (
-	"github.com/fasthttp/router"
+	"test-service/internal/models"
+	"test-service/internal/router"
+
 	"github.com/valyala/fasthttp"
 )
 
 type Database interface {
-	SaveMessage()
-	GetMessages()
+	SaveMessage() error
+	GetMessages() ([]models.Message, error)
 }
 
-func registerMessage(r *router.Router) {
-	r.POST("/message", receiveMessage)
-	r.GET("/messages/stats", getStatistics)
+func RegisterMessage(r *router.Router) {
+	r.r.POST("message", receiveMessage)
+	r.r.GET("/messages/stats", getStatistics)
 }
 
 func receiveMessage(ctx *fasthttp.RequestCtx) {

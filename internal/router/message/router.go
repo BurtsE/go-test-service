@@ -1,6 +1,7 @@
 package router
 
 import (
+
 	"github.com/fasthttp/router"
 	"github.com/sirupsen/logrus"
 )
@@ -12,6 +13,7 @@ type Router struct {
 
 func NewRouter(logger *logrus.Logger) *Router {
 	r := router.New()
+	RegisterMessage(r)
 	return &Router{
 		r: r,
 		l: logger,

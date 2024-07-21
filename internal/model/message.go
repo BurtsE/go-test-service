@@ -1,4 +1,4 @@
-package models
+package model
 
 const (
 	InProgress = 1 << iota
