@@ -18,10 +18,32 @@ func NewRepository(db *sql.DB) *repository {
 	}
 }
 
-func (s *repository) GetMessages() ([]model.Message, error) {
-	return nil, nil
+func (r *repository) GetMessages() ([]model.Message, error) {
+	query := `
+		SELECT text, status
+		FROM messages
+	`
+	rows, err := r.db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	messages := []model.Message{}
+	for rows.Next() {
+		msg := model.Message{}
+		rows.Scan(&msg.Text, &msg.Status)
+		messages = append(messages, msg)
+	}
+	return messages, nil
 }
 
-func (s *repository) SaveMessage() error {
+func (r *repository) SaveMessage(msg model.Message) error {
+	query := `
+		INSERT INTO messages (text, status)
+		VALUES ($1, $2)
+	`
+	_, err := r.db.Query(query, msg.Text, msg.Status)
+	if err != nil {
+		return err
+	}
 	return nil
 }

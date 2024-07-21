@@ -3,6 +3,6 @@ package repo
 import "test-service/internal/model"
 
 type MessageRepository interface {
-	SaveMessage() error
+	SaveMessage(model.Message) error
 	GetMessages() ([]model.Message, error)
 }
