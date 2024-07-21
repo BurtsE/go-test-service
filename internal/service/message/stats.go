@@ -3,5 +3,9 @@ package message
 import "test-service/internal/model"
 
 func (s *service) GetMessages() ([]model.Message, error) {
-	return nil, nil
+	messages, err := s.messageRepo.GetMessages()
+	if err != nil {
+		return nil, err
+	}
+	return messages, nil
 }
