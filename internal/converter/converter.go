@@ -14,7 +14,7 @@ func JsonToMessage(data []byte) (model.Message, error) {
 	return msg, nil
 }
 
-func StatisticsToJson(processed, unProcessed uint) ([]byte, error) {
+func StatisticsToJson(unProcessed, processed uint) ([]byte, error) {
 	stats := model.Statistics{
 		Processed:   processed,
 		UnProcessed: unProcessed,
