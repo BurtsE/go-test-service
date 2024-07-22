@@ -5,11 +5,23 @@ import (
 	"test-service/internal/model"
 )
 
-func JsonToMessage(data []byte) error {
+func JsonToMessage(data []byte) (model.Message, error) {
 	msg := model.Message{Status: model.InProgress}
 	err := json.Unmarshal(data, &msg)
 	if err != nil {
-		return err
+		return msg, err
 	}
-	return nil
+	return msg, nil
+}
+
+func StatisticsToJson(processed, unProcessed uint) ([]byte, error) {
+	stats := model.Statistics{
+		Processed:   processed,
+		UnProcessed: unProcessed,
+	}
+	data, err := json.Marshal(stats)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
 }
