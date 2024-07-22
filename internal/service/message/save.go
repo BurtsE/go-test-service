@@ -1,7 +1,9 @@
 package message
 
-func (s *service) SaveMessage() error {
-	err := s.messageRepo.SaveMessage()
+import "test-service/internal/model"
+
+func (s *service) SaveMessage(msg model.Message) error {
+	err := s.messageRepo.SaveMessage(msg)
 	if err != nil {
 		return err
 	}
