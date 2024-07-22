@@ -2,15 +2,9 @@ package router
 
 import (
 	"test-service/internal/converter"
-	"test-service/internal/model"
 
 	"github.com/valyala/fasthttp"
 )
-
-type Database interface {
-	SaveMessage() error
-	GetMessages() ([]model.Message, error)
-}
 
 type messageImpl struct {
 	r *Router
