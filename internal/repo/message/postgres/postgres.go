@@ -3,10 +3,10 @@ package postgres
 import (
 	"database/sql"
 	"test-service/internal/model"
-	def "test-service/internal/service"
+	def "test-service/internal/repo/message"
 )
 
-var _ def.MessageService = (*repository)(nil)
+var _ def.MessageRepository = (*repository)(nil)
 
 type repository struct {
 	db *sql.DB
