@@ -6,6 +6,6 @@ const (
 )
 
 type Message struct {
-	Text   string
-	Status uint
+	Text   string `json:"text,omitempty"`
+	Status uint   `json:"status"`
 }
