@@ -17,7 +17,8 @@ type repository struct {
 	db *sql.DB
 }
 
-func NewRepository(cfg *config.Config) *repository {
+func NewRepository(cfg *config.Config) (*repository, error) {
+	log.Println("initiating repository")
 	DSN := fmt.Sprintf(
 		"dbname=%s user=%s password=%s host=%s port=%s sslmode=%s",
 		cfg.DB,
@@ -29,12 +30,11 @@ func NewRepository(cfg *config.Config) *repository {
 	)
 	db, _ := sql.Open("postgres", DSN)
 	if err := db.Ping(); err != nil {
-		log.Println(err)
-		return nil
+		return nil, err
 	}
 	return &repository{
 		db: db,
-	}
+	}, nil
 }
 
 func (r *repository) GetMessages() ([]model.Message, error) {

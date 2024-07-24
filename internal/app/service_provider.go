@@ -38,7 +38,11 @@ func (s *serviceProvider) Config() *config.Config {
 
 func (s *serviceProvider) MessageRepository() repo.MessageRepository {
 	if s.messageRepository == nil {
-		s.messageRepository = postgres.NewRepository(s.cfg)
+		repo, err := postgres.NewRepository(s.cfg)
+		if err != nil {
+			log.Fatalf("could not init repo: %s", err.Error())
+		}
+		s.messageRepository = repo
 	}
 	return s.messageRepository
 }
