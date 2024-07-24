@@ -3,7 +3,8 @@
         "host": "localhost",
         "port": "5000",
         "db": "go-test-service",
-        "max_conns": 1
+        "max_conns": 1,
+        "sslmode": "disable"
     },
     "service": {
         "port": ":8000"
