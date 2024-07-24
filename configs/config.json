@@ -1,0 +1,11 @@
+{
+    "postgres": {
+        "host": "localhost",
+        "port": "5000",
+        "db": "go-test-service",
+        "max_conns": 1
+    },
+    "service": {
+        "port": ":8000"
+    }
+}
