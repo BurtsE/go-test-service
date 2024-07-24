@@ -1,6 +1,7 @@
 package message
 
 import (
+	"test-service/internal/config"
 	repo "test-service/internal/repo/message"
 	def "test-service/internal/service"
 )
@@ -11,8 +12,8 @@ type service struct {
 	messageRepo repo.MessageRepository
 }
 
-func NewService(messageRepository *repo.MessageRepository) *service {
+func NewService(messageRepository repo.MessageRepository, cfg *config.Config) *service {
 	return &service{
-		messageRepo: *messageRepository,
+		messageRepo: messageRepository,
 	}
 }
