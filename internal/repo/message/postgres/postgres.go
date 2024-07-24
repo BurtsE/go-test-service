@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"database/sql"
+	"test-service/internal/config"
 	"test-service/internal/model"
 	def "test-service/internal/repo/message"
 )
@@ -12,7 +13,8 @@ type repository struct {
 	db *sql.DB
 }
 
-func NewRepository(db *sql.DB) *repository {
+func NewRepository(db *sql.DB, cfg *config.Config) *repository {
+	
 	return &repository{
 		db: db,
 	}
@@ -20,7 +22,7 @@ func NewRepository(db *sql.DB) *repository {
 
 func (r *repository) GetMessages() ([]model.Message, error) {
 	query := `
-		SELECT text, status
+		SELECT id, text, status
 		FROM messages
 	`
 	rows, err := r.db.Query(query)
