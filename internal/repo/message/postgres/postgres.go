@@ -2,9 +2,13 @@ package postgres
 
 import (
 	"database/sql"
+	"fmt"
+	"log"
 	"test-service/internal/config"
 	"test-service/internal/model"
 	def "test-service/internal/repo/message"
+
+	_ "github.com/lib/pq"
 )
 
 var _ def.MessageRepository = (*repository)(nil)
@@ -13,8 +17,21 @@ type repository struct {
 	db *sql.DB
 }
 
-func NewRepository(db *sql.DB, cfg *config.Config) *repository {
-	
+func NewRepository(cfg *config.Config) *repository {
+	DSN := fmt.Sprintf(
+		"dbname=%s user=%s password=%s host=%s port=%s sslmode=%s",
+		cfg.DB,
+		cfg.User,
+		cfg.Password,
+		cfg.Host,
+		cfg.Postgres.Port,
+		cfg.Sslmode,
+	)
+	db, _ := sql.Open("postgres", DSN)
+	if err := db.Ping(); err != nil {
+		log.Println(err)
+		return nil
+	}
 	return &repository{
 		db: db,
 	}
