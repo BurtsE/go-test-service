@@ -12,7 +12,7 @@ type messageImpl struct {
 
 func RegisterMessage(r *Router) {
 	msgImpl := messageImpl{r}
-	r.router.POST("message", msgImpl.receiveMessage)
+	r.router.POST("/message", msgImpl.receiveMessage)
 	r.router.GET("/messages/stats", msgImpl.getStatistics)
 }
 
