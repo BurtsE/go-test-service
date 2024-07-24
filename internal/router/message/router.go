@@ -17,7 +17,7 @@ type Router struct {
 	port       string
 }
 
-func NewRouter(logger *logrus.Logger, msgService service.MessageService, cfg config.Config) *Router {
+func NewRouter(logger *logrus.Logger, cfg *config.Config, msgService service.MessageService) *Router {
 	router := router.New()
 	r := &Router{
 		router:     router,

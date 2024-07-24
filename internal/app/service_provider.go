@@ -38,7 +38,7 @@ func (s *serviceProvider) Config() *config.Config {
 
 func (s *serviceProvider) MessageRepository() repo.MessageRepository {
 	if s.messageRepository == nil {
-		s.messageRepository = postgres.NewRepository(nil, nil)
+		s.messageRepository = postgres.NewRepository(s.cfg)
 	}
 	return s.messageRepository
 }
@@ -52,7 +52,7 @@ func (s *serviceProvider) MessageService() service.MessageService {
 
 func (s *serviceProvider) Router() *router.Router {
 	if s.router == nil {
-		s.router = router.NewRouter(logrus.New(), s.MessageService(), *s.Config())
+		s.router = router.NewRouter(logrus.New(), s.Config(), s.MessageService())
 	}
 	return s.router
 }
