@@ -3,6 +3,8 @@ package app
 import (
 	"log"
 	"test-service/internal/config"
+	"test-service/internal/processor"
+	kafka "test-service/internal/processor/message"
 	repo "test-service/internal/repo/message"
 	"test-service/internal/repo/message/postgres"
 	router "test-service/internal/router/message"
@@ -16,6 +18,7 @@ type serviceProvider struct {
 	cfg               *config.Config
 	messageRepository repo.MessageRepository
 	messageService    service.MessageService
+	messageProcessor  processor.MessageProcessor
 	router            *router.Router
 }
 
@@ -47,9 +50,20 @@ func (s *serviceProvider) MessageRepository() repo.MessageRepository {
 	return s.messageRepository
 }
 
+func (s *serviceProvider) MessageProcessor() processor.MessageProcessor {
+	if s.messageProcessor == nil {
+		p, err := kafka.NewKafka()
+		if err != nil {
+			log.Fatal("could not connect to kafka:", err)
+		}
+		s.messageProcessor = p
+	}
+	return s.messageProcessor
+}
+
 func (s *serviceProvider) MessageService() service.MessageService {
 	if s.messageService == nil {
-		s.messageService = message.NewService(s.MessageRepository(), s.cfg)
+		s.messageService = message.NewService(s.MessageRepository(), s.MessageProcessor(), s.cfg)
 	}
 	return s.messageService
 }

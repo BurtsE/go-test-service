@@ -1,6 +1,7 @@
 package model
 
 type Statistics struct {
-	Processed   uint `json:"processed,omitempty"`
-	UnProcessed uint `json:"in_progress,omitempty"`
+	Received   *uint `json:"received,omitempty"`
+	Processed  *uint `json:"processed,omitempty"`
+	InProgress *uint `json:"in_progress,omitempty"`
 }
