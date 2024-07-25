@@ -1,7 +1,6 @@
 package router
 
 import (
-	"log"
 	"test-service/internal/config"
 	"test-service/internal/service"
 

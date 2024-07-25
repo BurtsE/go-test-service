@@ -15,8 +15,6 @@ type Kafka struct {
 }
 
 func NewKafka(cfg *config.Config) (*Kafka, error) {
-
-
 	w := &kafka.Writer{
 		Addr:     kafka.TCP(cfg.Brokers...),
 		Topic:    cfg.Topic,
