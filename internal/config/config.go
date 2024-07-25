@@ -3,6 +3,7 @@ package config
 type Config struct {
 	Postgres `json:"postgres,omitempty"`
 	Service  `json:"service,omitempty"`
+	Kafka    `json:"kafka,omitempty"`
 }
 
 type Service struct {
@@ -17,4 +18,9 @@ type Postgres struct {
 	Sslmode  string `json:"sslmode"`
 	User     string `env:"PG_USER,notEmpty"`
 	Password string `env:"PG_PASSWORD,notEmpty"`
+}
+
+type Kafka struct {
+	Brokers []string `json:"brokers,omitempty"`
+	Topic   string   `json:"topic,omitempty"`
 }

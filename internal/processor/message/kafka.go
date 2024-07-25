@@ -3,6 +3,7 @@ package message
 import (
 	"context"
 	"log"
+	"test-service/internal/config"
 	"test-service/internal/converter"
 	"test-service/internal/model"
 
@@ -10,11 +11,10 @@ import (
 )
 
 type Kafka struct {
-	reader *kafka.Reader
 	writer *kafka.Writer
 }
 
-func NewKafka() (*Kafka, error) {
+func NewKafka(cfg *config.Config) (*Kafka, error) {
 	reader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:   []string{"localhost:9092", "localhost:9093", "localhost:9094"},
 		Topic:     "topic-A",
@@ -23,12 +23,11 @@ func NewKafka() (*Kafka, error) {
 	})
 
 	w := &kafka.Writer{
-		Addr:     kafka.TCP("localhost:9092", "localhost:9093", "localhost:9094"),
-		Topic:    "topic-B",
+		Addr:     kafka.TCP(cfg.Brokers...),
+		Topic:    cfg.Topic,
 		Balancer: &kafka.LeastBytes{},
 	}
 	return &Kafka{
-		reader: reader,
 		writer: w,
 	}, nil
 }
