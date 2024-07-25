@@ -15,12 +15,7 @@ type Kafka struct {
 }
 
 func NewKafka(cfg *config.Config) (*Kafka, error) {
-	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{"localhost:9092", "localhost:9093", "localhost:9094"},
-		Topic:     "topic-A",
-		Partition: 0,
-		MaxBytes:  10e6, // 10MB
-	})
+
 
 	w := &kafka.Writer{
 		Addr:     kafka.TCP(cfg.Brokers...),
