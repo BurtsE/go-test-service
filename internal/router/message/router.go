@@ -1,6 +1,7 @@
 package router
 
 import (
+	"log"
 	"test-service/internal/config"
 	"test-service/internal/service"
 
@@ -19,15 +20,16 @@ type Router struct {
 
 func NewRouter(logger *logrus.Logger, cfg *config.Config, msgService service.MessageService) *Router {
 	router := router.New()
+	srv := &fasthttp.Server{}
 	r := &Router{
 		router:     router,
 		logger:     logger,
 		msgService: msgService,
 		port:       cfg.Service.Port,
-		srv: &fasthttp.Server{
-			Handler: router.Handler,
-		},
+		srv:        srv,
 	}
+	srv.Handler = r.loggerDecorator(router.Handler)
+
 	RegisterMessage(r)
 	r.router.GET("/status", statusHandler)
 	return r
@@ -43,4 +45,11 @@ func (r *Router) Shutdown() error {
 
 func statusHandler(ctx *fasthttp.RequestCtx) {
 	ctx.SetStatusCode(fasthttp.StatusOK)
+}
+
+func (r *Router) loggerDecorator(handler fasthttp.RequestHandler) fasthttp.RequestHandler {
+	return func(ctx *fasthttp.RequestCtx) {
+		handler(ctx)
+		r.logger.Printf("api request: %s ;status code: %d", ctx.Path(), ctx.Response.StatusCode())
+	}
 }
