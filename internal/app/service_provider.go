@@ -52,7 +52,7 @@ func (s *serviceProvider) MessageRepository() repo.MessageRepository {
 
 func (s *serviceProvider) MessageProcessor() processor.MessageProcessor {
 	if s.messageProcessor == nil {
-		p, err := kafka.NewKafka()
+		p, err := kafka.NewKafka(s.Config())
 		if err != nil {
 			log.Fatal("could not connect to kafka:", err)
 		}
@@ -63,7 +63,7 @@ func (s *serviceProvider) MessageProcessor() processor.MessageProcessor {
 
 func (s *serviceProvider) MessageService() service.MessageService {
 	if s.messageService == nil {
-		s.messageService = message.NewService(s.MessageRepository(), s.MessageProcessor(), s.cfg)
+		s.messageService = message.NewService(s.MessageRepository(), s.MessageProcessor(), s.Config())
 	}
 	return s.messageService
 }
