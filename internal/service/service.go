@@ -4,5 +4,5 @@ import "test-service/internal/model"
 
 type MessageService interface {
 	SaveMessage(model.Message) error
-	GetStatistics() (uint, uint, error)
+	GetStatistics() (model.Statistics, error)
 }
