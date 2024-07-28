@@ -1,6 +1,6 @@
 {
     "postgres": {
-        "host": "localhost",
+        "host": "db",
         "port": "5432",
         "db": "go-test-service",
         "max_conns": 1,
