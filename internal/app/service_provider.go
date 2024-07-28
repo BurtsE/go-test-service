@@ -54,7 +54,7 @@ func (s *serviceProvider) MessageProcessor() processor.MessageProcessor {
 	if s.messageProcessor == nil {
 		p, err := kafka.NewKafka(s.Config())
 		if err != nil {
-			log.Fatal("could not connect to kafka:", err)
+			log.Fatalf("could not connect to kafka: %s", err.Error())
 		}
 		s.messageProcessor = p
 	}

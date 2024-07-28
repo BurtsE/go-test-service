@@ -27,7 +27,7 @@ func (m *messageImpl) receiveMessage(ctx *fasthttp.RequestCtx) {
 
 	err = m.r.msgService.SaveMessage(msg)
 	if err != nil {
-		m.r.logger.Errorf("could not save message: %e", err.Error())
+		m.r.logger.Errorf("could not save message: %s", err.Error())
 		ctx.SetStatusCode(500)
 		return
 	}
@@ -36,14 +36,14 @@ func (m *messageImpl) receiveMessage(ctx *fasthttp.RequestCtx) {
 func (m *messageImpl) getStatistics(ctx *fasthttp.RequestCtx) {
 	stats, err := m.r.msgService.GetStatistics()
 	if err != nil {
-		m.r.logger.Errorf("could not get statistics: %e", err.Error())
+		m.r.logger.Errorf("could not get statistics: %s", err.Error())
 		ctx.SetStatusCode(500)
 		return
 	}
 
 	data, err := converter.StatisticsToJson(stats)
 	if err != nil {
-		m.r.logger.Errorf("could not create response body: %e", err.Error())
+		m.r.logger.Errorf("could not create response body: %s", err.Error())
 		ctx.SetStatusCode(500)
 		return
 	}
