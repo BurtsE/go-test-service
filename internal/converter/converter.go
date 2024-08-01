@@ -9,7 +9,7 @@ import (
 )
 
 func JsonToMessage(data []byte) (model.Message, error) {
-	msg := model.Message{Status: model.InProgress}
+	msg := model.Message{}
 	err := json.Unmarshal(data, &msg)
 	if err != nil {
 		return msg, err
