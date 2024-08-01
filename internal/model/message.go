@@ -2,7 +2,7 @@ package model
 
 type Status uint
 const (
-	StatusUndefined = iota
+	StatusUndefined Status = iota
 	Created
 	InProgress
 	Finished
