@@ -1,7 +1,9 @@
 package model
 
+type Status uint
 const (
-	Created = 1 << iota
+	StatusUndefined = iota
+	Created
 	InProgress
 	Finished
 )
@@ -9,5 +11,5 @@ const (
 type Message struct {
 	UUID   uint64 `json:"id,omitempty"`
 	Text   string `json:"text,omitempty"`
-	Status uint   `json:"status"`
+	Status Status   `json:"status"`
 }
